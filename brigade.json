@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@azure/brigadier": "^0.4.0"
+  }
+}
