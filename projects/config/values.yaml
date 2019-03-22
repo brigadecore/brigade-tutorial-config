@@ -1,4 +1,4 @@
 project: "kooba/brigade-tutorial-config"
 repository: "github.com/kooba/brigade-tutorial-config"
 cloneURL: "https://github.com/kooba/brigade-tutorial-config"
-workerCommand: yarn build-start
+workerCommand: node_modules/.bin/tsc brigade.ts; yarn start
