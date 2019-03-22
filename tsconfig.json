@@ -6,10 +6,9 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "outDir": "dist",
+    "outDir": "",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "inlineSourceMap": true,
     "esModuleInterop": true
   },
   "include": [
