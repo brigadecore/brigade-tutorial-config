@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Brigade Tutorial",
   "main": "brigade.js",
-  "scripts": {
-    "build": "tsc"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kooba/brigade-tutorial-config.git"
@@ -18,7 +16,6 @@
   "homepage": "https://github.com/kooba/brigade-tutorial-config#readme",
   "dependencies": {
     "@azure/brigadier": "^0.4.0",
-    "@kubernetes/client-node": "^0.8.2",
-    "typescript": "^3.3.4000"
+    "@kubernetes/client-node": "^0.8.2"
   }
 }

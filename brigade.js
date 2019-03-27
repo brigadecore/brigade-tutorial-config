@@ -1,4 +1,4 @@
-import { events } from "@azure/brigadier";
+const { events } = require("@azure/brigadier");
 
 events.on("exec", (event, project) => {
   console.log("Hello Brigade!");

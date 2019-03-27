@@ -31,11 +31,11 @@ deploy-projects:
 		--kube-context $(CONTEXT) \
 		--set sharedSecret=$(GITHUB_SHARED_SECRET) \
 		--set github.token=$(GITHUB_TOKEN) \
+		--set worker.tag=v1.0.0-beta.2 \
 		-f projects/$$project/values.yaml; \
 	done
 
 
 create-environment:
-	yarn build
 	brig run -c $(COMMIT) -r $(REF) -f brigade.js kooba/brigade-tutorial-config \
 	--kube-context $(CONTEXT) --namespace brigade
