@@ -7,6 +7,12 @@ ENV_NAME ?= bob
 GITHUB_TOKEN ?= ""
 GITHUB_SHARED_SECRET ?= ""
 
+configure-helm:
+	kubectl --context=$(CONTEXT) create serviceaccount --namespace kube-system tiller
+	kubectl --context=$(CONTEXT) create clusterrolebinding tiller-cluster-rule \
+	--clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+	helm --kube-context=$(CONTEXT) init --service-account tiller
+
 brigade-namespace:
 	kubectl --context=$(CONTEXT) apply -f namespace.yaml
 
@@ -31,10 +37,9 @@ deploy-projects:
 		--kube-context $(CONTEXT) \
 		--set sharedSecret=$(GITHUB_SHARED_SECRET) \
 		--set github.token=$(GITHUB_TOKEN) \
-		--set worker.tag=v1.0.0-beta.2 \
+		--set worker.tag=v1.0.0 \
 		-f projects/$$project/values.yaml; \
 	done
-
 
 create-environment:
 	cat payload.tmpl | jq '.name = "$(ENV_NAME)" | .action = "create"' > payload.json
