@@ -1,4 +1,4 @@
-const { events, Job } = require("@azure/brigadier");
+const { events, Job } = require("@brigadecore/brigadier");
 const kubernetes = require("@kubernetes/client-node");
 
 const k8sClient = kubernetes.Config.defaultClient();

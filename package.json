@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/kooba/brigade-tutorial-config#readme",
   "dependencies": {
-    "@azure/brigadier": "^0.4.0",
+    "@brigadecore/brigadier": "^0.4.0",
     "@kubernetes/client-node": "^0.8.2"
   }
 }

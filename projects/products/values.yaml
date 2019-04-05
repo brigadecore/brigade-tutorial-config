@@ -1,0 +1,3 @@
+project: "kooba/brigade-tutorial-app"
+repository: "github.com/kooba/brigade-tutorial-app"
+cloneURL: "https://github.com/kooba/brigade-tutorial-app"

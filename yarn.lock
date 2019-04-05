@@ -12,6 +12,16 @@
     pretty-error "^2.1.1"
     ulid "^0.2.0"
 
+"@brigadecore/brigadier@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@brigadecore/brigadier/-/brigadier-0.4.0.tgz#5b4f19a8a1b87fdb59ebe6c076aaa92df82600b3"
+  integrity sha512-fiEphCpZFnhid2ukxWTvZ3btDQshpgHnzPozYWoEb1D+leLM4ex+09NRDS1HQpu36Oh6x8lpZBeAYVgqJWgd7A==
+  dependencies:
+    "@kubernetes/client-node" "^0.7.2"
+    child-process-promise "^2.2.1"
+    pretty-error "^2.1.1"
+    ulid "^0.2.0"
+
 "@kubernetes/client-node@^0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@kubernetes/client-node/-/client-node-0.7.2.tgz#b4d58b7e984615cb61c3c4482c93b06fb2d0e5d1"
