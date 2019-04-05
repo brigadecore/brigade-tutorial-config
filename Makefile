@@ -43,5 +43,5 @@ deploy-projects:
 
 create-environment:
 	cat payload.tmpl | jq '.name = "$(ENV_NAME)" | .action = "create"' > payload.json
-	brig run -c $(COMMIT) -r $(REF) -f brigade.js -p payload.json \
-	kooba/brigade-tutorial-config --kube-context $(CONTEXT) --namespace brigade
+	brig run kooba/brigade-tutorial-config -c $(COMMIT) -r $(REF) -f brigade.js \
+	-p payload.json --kube-context $(CONTEXT) --namespace brigade
