@@ -1,5 +1,6 @@
 const { events, Job } = require("@brigadecore/brigadier");
 const kubernetes = require("@kubernetes/client-node");
+const yaml = require("js-yaml");
 
 const k8sClient = kubernetes.Config.defaultClient();
 
@@ -38,6 +39,37 @@ const createNamespace = async namespaceName => {
 
   await k8sClient.createNamespace(namespace);
   console.log(`Done creating new namespace "${namespaceName}"`);
+};
+
+const createEnvironmentConfigMap = async (name, projects) => {
+  console.log("creating environment configMap");
+  const configMap = new kubernetes.V1ConfigMap();
+  const metadata = new kubernetes.V1ObjectMeta();
+  metadata.name = `preview-environment-${name}`;
+  metadata.namespace = BRIGADE_NAMESPACE;
+  metadata.labels = {
+    type: "preview-environment-config",
+    environmentName: name,
+  };
+  configMap.metadata = metadata;
+  configMap.data = {
+    environment: yaml.dump(projects),
+  };
+
+  try {
+    await k8sClient.createNamespacedConfigMap(BRIGADE_NAMESPACE, configMap);
+  } catch (error) {
+    if (error.body && error.body.code === 409) {
+      await k8sClient.replaceNamespacedConfigMap(
+        configMap.metadata.name,
+        BRIGADE_NAMESPACE,
+        configMap,
+      );
+    } else {
+      throw error;
+    }
+  }
+  console.log("done creating environment configMap");
 };
 
 const ensurePodIsRunning = async (environmentName, appLabel) => {
@@ -86,6 +118,7 @@ const deployDependencies = async environmentName => {
 
 const provisionEnvironment = async (environmentName, projects) => {
   await createNamespace(environmentName);
+  await createEnvironmentConfigMap(environmentName, projects);
   await deployDependencies(environmentName);
 };
 
