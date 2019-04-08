@@ -2,16 +2,6 @@
 # yarn lockfile v1
 
 
-"@azure/brigadier@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@azure/brigadier/-/brigadier-0.4.0.tgz#6fa24b6fc2dd85ae8a81f1b2cf57c7604597cf5d"
-  integrity sha512-ApMy7Pcu7+XDJS/2oTS1hpjCgYGNAXRdBubSpX0uipsv5sA8Drj7aB7Q/7EZUxpLmETgI4ZxQs/4l7Bm6c4qZQ==
-  dependencies:
-    "@kubernetes/client-node" "^0.7.2"
-    child-process-promise "^2.2.1"
-    pretty-error "^2.1.1"
-    ulid "^0.2.0"
-
 "@brigadecore/brigadier@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@brigadecore/brigadier/-/brigadier-0.4.0.tgz#5b4f19a8a1b87fdb59ebe6c076aaa92df82600b3"
@@ -78,14 +68,14 @@
     "@types/node" "*"
 
 "@types/js-yaml@^3.11.2":
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.0.tgz#3494ce97358e2675e24e97a747ec23478eeaf8b6"
-  integrity sha512-UGEe/6RsNAxgWdknhzFZbCxuYc5I7b/YEKlfKbo+76SM8CJzGs7XKCj7zyugXViRbKYpXhSXhCYVQZL5tmDbpQ==
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.1.tgz#5c6f4a1eabca84792fbd916f0cb40847f123c656"
+  integrity sha512-SGGAhXLHDx+PK4YLNcNGa6goPf9XRWQNAUUbffkwVGGXIxmDKWyGGL4inzq2sPmExu431Ekb9aEMn9BkPqEYFA==
 
 "@types/node@*":
-  version "11.12.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.12.0.tgz#ec5594728811dc2797e42396cfcdf786f2052c12"
-  integrity sha512-Lg00egj78gM+4aE0Erw05cuDbvX9sLJbaaPwwRtdCdAMnIudqrQZ0oZX98Ek0yiSK/A2nubHgJfvII/rTT2Dwg==
+  version "11.13.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.2.tgz#dc85dde46aa8740bb4aed54b8104250f8f849503"
+  integrity sha512-HOtU5KqROKT7qX/itKHuTtt5fV0iXbheQvrgbLNXFJQBY/eh+VS5vmmTAVlo3qIGMsypm0G4N1t2AXjy1ZicaQ==
 
 "@types/node@^10.12.0":
   version "10.14.4"
@@ -108,9 +98,9 @@
   integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
 
 "@types/underscore@^1.8.9":
-  version "1.8.13"
-  resolved "https://registry.yarnpkg.com/@types/underscore/-/underscore-1.8.13.tgz#e1bf89141fbccb71dcb3bf12d86a923c007698e3"
-  integrity sha512-2YEdDHTYAv3YmSoQofzFnlWYDAAtMtVcQ0lOHoURuCt1aT9OgxhhjRRU1WVAiLchNWM7B3a8/iomxenfr9TwKA==
+  version "1.8.14"
+  resolved "https://registry.yarnpkg.com/@types/underscore/-/underscore-1.8.14.tgz#bf8f24950e6705e5150756a5947dac76e5dce2c0"
+  integrity sha512-xbzi6UaATVKupInG3D65/EPQ3qkJCvG2ZAzmlIYt6x93ACOEX2Y0fHW4/e8TF3G7q5KB2l7wTZgzfNjyYDMuZw==
 
 "@types/ws@^6.0.1":
   version "6.0.1"

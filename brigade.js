@@ -2,7 +2,11 @@ const { events, Job } = require("@brigadecore/brigadier");
 const kubernetes = require("@kubernetes/client-node");
 const yaml = require("js-yaml");
 
-const k8sClient = kubernetes.Config.defaultClient();
+const kubeConfig = new kubernetes.KubeConfig();
+kubeConfig.loadFromDefault();
+
+const k8sCoreClient = kubeConfig.makeApiClient(kubernetes.Core_v1Api);
+const k8sAppClient = kubeConfig.makeApiClient(kubernetes.Apps_v1Api);
 
 const BRIGADE_NAMESPACE = "brigade";
 const GITHUB_API_URL = "https://api.github.com/repos";
@@ -22,7 +26,7 @@ const protectedEnvironment = namespaceName => {
 };
 
 const createNamespace = async namespaceName => {
-  const existingNamespace = await k8sClient.listNamespace(
+  const existingNamespace = await k8sCoreClient.listNamespace(
     true,
     "",
     `metadata.name=${namespaceName}`,
@@ -37,7 +41,7 @@ const createNamespace = async namespaceName => {
   namespace.metadata = new kubernetes.V1ObjectMeta();
   namespace.metadata.name = namespaceName;
 
-  await k8sClient.createNamespace(namespace);
+  await k8sCoreClient.createNamespace(namespace);
   console.log(`Done creating new namespace "${namespaceName}"`);
 };
 
@@ -57,10 +61,10 @@ const createEnvironmentConfigMap = async (name, projects) => {
   };
 
   try {
-    await k8sClient.createNamespacedConfigMap(BRIGADE_NAMESPACE, configMap);
+    await k8sCoreClient.createNamespacedConfigMap(BRIGADE_NAMESPACE, configMap);
   } catch (error) {
     if (error.body && error.body.code === 409) {
-      await k8sClient.replaceNamespacedConfigMap(
+      await k8sCoreClient.replaceNamespacedConfigMap(
         configMap.metadata.name,
         BRIGADE_NAMESPACE,
         configMap,
@@ -75,7 +79,7 @@ const createEnvironmentConfigMap = async (name, projects) => {
 const ensurePodIsRunning = async (environmentName, appLabel) => {
   let podIsRunning = false;
   while (!podIsRunning) {
-    const pod = await k8sClient.listNamespacedPod(
+    const pod = await k8sCoreClient.listNamespacedPod(
       environmentName,
       undefined,
       undefined,
@@ -95,24 +99,35 @@ const ensurePodIsRunning = async (environmentName, appLabel) => {
 
 const deployDependencies = async environmentName => {
   console.log("deploying dependencies");
-  const postgresql = new Job("postgresql", "lachlanevenson/k8s-helm:v2.12.3");
-  postgresql.storage.enabled = false;
-  postgresql.imageForcePull = true;
-  postgresql.tasks = [
-    `helm init --client-only && \
-     helm repo update && \
-     helm upgrade ${environmentName}-postgresql stable/postgresql \
-    --install --namespace=${environmentName} \
-    --set fullnameOverride=postgresql \
-    --set postgresqlDatabase=products \
-    --set resources.requests.cpu=50m \
-    --set resources.requests.memory=156Mi \
-    --set readinessProbe.initialDelaySeconds=60 \
-    --set livenessProbe.initialDelaySeconds=60;`,
-  ];
-
-  await postgresql.run();
-  await ensurePodIsRunning(environmentName, "postgresql");
+  const postgresqlStatefulSet = await k8sAppClient.listNamespacedStatefulSet(
+    environmentName,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    "app=postgresql",
+  );
+  if (postgresqlStatefulSet.body.items.length) {
+    console.log("postgresql already deployed");
+  } else {
+    const postgresql = new Job("postgresql", "lachlanevenson/k8s-helm:v2.12.3");
+    postgresql.storage.enabled = false;
+    postgresql.imageForcePull = true;
+    postgresql.tasks = [
+      `helm init --client-only && \
+      helm repo update && \
+      helm upgrade ${environmentName}-postgresql stable/postgresql \
+      --install --namespace=${environmentName} \
+      --set fullnameOverride=postgresql \
+      --set postgresqlDatabase=products \
+      --set resources.requests.cpu=50m \
+      --set resources.requests.memory=156Mi \
+      --set readinessProbe.initialDelaySeconds=60 \
+      --set livenessProbe.initialDelaySeconds=60;`,
+    ];
+    await postgresql.run();
+    await ensurePodIsRunning(environmentName, "postgresql");
+  }
   console.log("done deploying dependencies");
 };
 
