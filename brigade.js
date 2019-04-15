@@ -167,16 +167,6 @@ events.on("exec", event => {
           logError(error);
         });
         break;
-      case "delete":
-        destroyEnvironment(name).catch(error => {
-          logError(error);
-        });
-        break;
-      case "refresh":
-        refreshDeployments(name, projects).catch(error => {
-          logError(error);
-        });
-        break;
       default:
         throw Error("Not a supported action");
     }
