@@ -12,12 +12,7 @@ const BRIGADE_NAMESPACE = "brigade";
 const GITHUB_API_URL = "https://api.github.com/repos";
 
 const protectedEnvironment = namespaceName => {
-  const protectedNamespaces = [
-    "default",
-    "kube-public",
-    "kube-system",
-    "brigade",
-  ];
+  const protectedNamespaces = ["default", "kube-public", "kube-system", "brigade"];
 
   if (protectedNamespaces.includes(namespaceName)) {
     return true;
@@ -160,16 +155,9 @@ events.on("exec", event => {
     if (protectedEnvironment(name)) {
       throw Error(`Environment '${name}' is protected`);
     }
-
-    switch (action) {
-      case "create":
-        provisionEnvironment(name, projects).catch(error => {
-          logError(error);
-        });
-        break;
-      default:
-        throw Error("Not a supported action");
-    }
+    provisionEnvironment(name, projects).catch(error => {
+      logError(error);
+    });
   } catch (error) {
     logError(error);
   }
