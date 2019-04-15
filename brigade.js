@@ -52,7 +52,7 @@ const createEnvironmentConfigMap = async (name, projects) => {
   };
   configMap.metadata = metadata;
   configMap.data = {
-    environment: yaml.dump(projects),
+    projects: yaml.dump(projects),
   };
 
   try {
@@ -128,8 +128,8 @@ const deployDependencies = async environmentName => {
 
 const provisionEnvironment = async (environmentName, projects) => {
   await createNamespace(environmentName);
-  await createEnvironmentConfigMap(environmentName, projects);
   await deployDependencies(environmentName);
+  await createEnvironmentConfigMap(environmentName, projects);
 };
 
 const logError = error => {
@@ -147,7 +147,7 @@ const logError = error => {
 events.on("exec", event => {
   try {
     const payload = JSON.parse(event.payload);
-    const { name, projects, action } = payload;
+    const { name, projects } = payload;
 
     if (!name) {
       throw Error("Environment name must be specified");
