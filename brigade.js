@@ -12,7 +12,12 @@ const BRIGADE_NAMESPACE = "brigade";
 const GITHUB_API_URL = "https://api.github.com/repos";
 
 const protectedEnvironment = namespaceName => {
-  const protectedNamespaces = ["default", "kube-public", "kube-system", "brigade"];
+  const protectedNamespaces = [
+    "default",
+    "kube-public",
+    "kube-system",
+    "brigade",
+  ];
 
   if (protectedNamespaces.includes(namespaceName)) {
     return true;
@@ -128,8 +133,8 @@ const deployDependencies = async environmentName => {
 
 const provisionEnvironment = async (environmentName, projects) => {
   await createNamespace(environmentName);
-  await deployDependencies(environmentName);
   await createEnvironmentConfigMap(environmentName, projects);
+  await deployDependencies(environmentName);
 };
 
 const logError = error => {
