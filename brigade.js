@@ -9,7 +9,6 @@ const k8sCoreClient = kubeConfig.makeApiClient(kubernetes.Core_v1Api);
 const k8sAppClient = kubeConfig.makeApiClient(kubernetes.Apps_v1Api);
 
 const BRIGADE_NAMESPACE = "brigade";
-const GITHUB_API_URL = "https://api.github.com/repos";
 
 const protectedEnvironment = namespaceName => {
   const protectedNamespaces = [
