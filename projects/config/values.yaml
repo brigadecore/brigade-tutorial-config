@@ -1,3 +1,3 @@
-project: "kooba/brigade-tutorial-config"
-repository: "github.com/kooba/brigade-tutorial-config"
-cloneURL: "https://github.com/kooba/brigade-tutorial-config"
+project: "brigadecore/brigade-tutorial-config"
+repository: "github.com/brigadecore/brigade-tutorial-config"
+cloneURL: "https://github.com/brigadecore/brigade-tutorial-config"
