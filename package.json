@@ -9,7 +9,7 @@
     "url": "git+https://github.com/brigadecore/brigade-tutorial-config.git"
   },
   "author": "Jakub Borys",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/brigadecore/brigade-tutorial-config/issues"
   },
